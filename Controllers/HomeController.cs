@@ -34,6 +34,40 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
+    [HttpGet("Scroll/{id?}")]
+    public IActionResult Scroll([FromQuery] int? size, [FromQuery] int? offset = 0, int? id = 1) {
+        size ??= 100;
+        DemoObject d = _context.TableContainer.First(m => m.Id == id);
+        var table = 
+            (from row in _context.Entries 
+                where row.DemoObjectId == d.Id && row.Id >= size * offset 
+                select row)
+            .OrderBy(m => m.Id)
+            .Take(size.Value)
+            .ToList();
+
+        d.Table = table;
+
+        if (HttpContext.Request.IsHtmx())
+        {
+            offset++;
+            ViewData["offset"] = offset;
+            ViewData["size"] = size;
+            Response.Headers.Add("Vary", "HX-Request");
+            return PartialView("_ScrollTable", table);
+        } else {
+            ViewData["offset"] = 1;
+            ViewData["size"] = size;
+            return View("InfiniteScroll", d);
+        }
+    }
+
+    [HttpGet("OffsetInfo/{offset}")]
+    public IActionResult OffsetInfo(int offset){
+        Response.Headers.Add("Vary", "HX-Request");
+        return PartialView("OffsetInfo", offset);
+    }
+
     [HttpGet("Demo/{sortIdx?}")]
     public IActionResult Demo(int? sortIdx, [FromQuery] int? size, [FromQuery] int id = 1) {
         size ??= 100;
@@ -49,10 +83,8 @@ public class HomeController : Controller
             ChangeSort(d, sortIdx.Value);
 
             Response.Headers.Add("Vary", "HX-Request");
-            Console.WriteLine("Returning _TableData partial view");
             return PartialView("_TableData", d.Table);
         } else {
-            Console.WriteLine("Returning _Table view");
             return View("Table", d);
         }
     }

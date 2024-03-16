@@ -1,0 +1,32 @@
+@model IEnumerable<DemoTable>
+@using dotnet_html_sortable_table.Models;
+
+@{
+ int offset = (int)ViewData["offset"]; 
+ int size = (int)ViewData["size"]; 
+}
+
+
+@foreach (var item in Model) 
+{
+<tr>
+  <td>
+    @Html.DisplayFor(modelitem => item.Id)
+  </td>
+  <td>
+    @Html.DisplayFor(modelitem => item.RandInt)
+  </td>
+  <td>
+    @Html.DisplayFor(modelitem => item.Name)
+  </td>
+</tr>
+}
+
+<tr
+  hx-target="#tablecontent"
+  hx-trigger="revealed"
+  hx-get="/scroll/1?offset=@offset&size=@size"
+  hx-swap="beforeend"
+  >
+</tr>
+

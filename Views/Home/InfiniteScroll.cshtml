@@ -1,0 +1,30 @@
+@model DemoObject
+@using dotnet_html_sortable_table.Models;
+
+@{
+  ViewData["Title"] = "Infinite Scroll";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.9.10/htmx.min.js"></script>
+
+<table class="table"
+  <thead>
+    <tr class="headers">
+      <th>
+        @Html.DisplayNameFor(model => model.Table[0].Id)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Table[0].RandInt)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Table[0].Name)
+      </th>
+    </tr>
+  </thead>
+
+  <tbody id="tablecontent"> 
+    @await Html.PartialAsync("_ScrollTable", Model.Table)
+  </tbody>
+
+</table>
+ 
