@@ -3,9 +3,30 @@
 
 @{
   ViewData["Title"] = "Infinite Scroll";
+  bool split = (bool)ViewData["split"];
 }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.9.10/htmx.min.js"></script>
+
+<style type="text/css" media="all">
+  .buttons {
+    display: flex;
+    justify-content: center;
+  }
+
+  .btn:active {
+    background: gray
+  }
+</style>
+<div class="buttons">
+  <form action="/Scroll" method="get">
+    <button class="btn btn-link">Full Scroll</button>
+  </form>
+  <form action="/Scroll?split=true" method="get">
+    <button class="btn btn-link" type="submit">Split Scroll</button>
+  </form>
+</div>
+
 
 <table class="table"
   <thead>

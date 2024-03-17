@@ -9,6 +9,7 @@ public class SqliteContext : DbContext
 
     public DbSet<DemoTable> Entries { get; set; } = default!;
     public DbSet<DemoObject> TableContainer { get; set; } = default!;
+    public DbSet<Accounts> Accounts { get; set; } = default!;
 
     public SqliteContext(DbContextOptions<SqliteContext> contextOptions) : base(contextOptions) {
     }

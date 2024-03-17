@@ -34,8 +34,35 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
+
+    [HttpGet("Accounts")]
+    public IActionResult AccountsList([FromQuery] int? size) {
+        size ??= 100;
+        var accounts = _context.Accounts.Take(size.Value).ToList();
+
+        return View("AccountsList", accounts);
+    }
+
+    [HttpPost("AccountsListFilter")]
+    public IActionResult AccountsListFilter(string search, [FromQuery] int? size) {
+        size ??= 100;
+
+        IEnumerable<Accounts> accounts;
+        if (search != null && !search.Equals("")) {
+            accounts = (from row in _context.Accounts
+            where row.FirstName.Contains(search)
+            select row).Take(size.Value).ToList();
+        } else {
+            accounts = _context.Accounts.Take(size.Value).ToList();
+        }
+
+        Response.Headers.Add("Vary", "HX-Request");
+        return PartialView("_SearchTable", accounts);
+    }
+
+
     [HttpGet("Scroll/{id?}")]
-    public IActionResult Scroll([FromQuery] int? size, [FromQuery] int? offset = 0, int? id = 1) {
+    public IActionResult Scroll([FromQuery] int? size, [FromQuery] int? offset = 0, int? id = 1, [FromQuery] bool? split = false) {
         size ??= 100;
         DemoObject d = _context.TableContainer.First(m => m.Id == id);
         var table = 
@@ -53,11 +80,13 @@ public class HomeController : Controller
             offset++;
             ViewData["offset"] = offset;
             ViewData["size"] = size;
+            ViewData["split"] = split;
             Response.Headers.Add("Vary", "HX-Request");
             return PartialView("_ScrollTable", table);
         } else {
             ViewData["offset"] = 1;
             ViewData["size"] = size;
+            ViewData["split"] = split;
             return View("InfiniteScroll", d);
         }
     }

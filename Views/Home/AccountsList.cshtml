@@ -1,0 +1,156 @@
+@using dotnet_html_sortable_table.Models
+@model IEnumerable<Accounts>
+
+@{
+  Layout = "_Layout";
+  ViewData["Title"] = "Accounts Search";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.9.10/htmx.min.js"></script>
+
+<div>
+  <label>Search First Names: </label>
+  <input type="text" name="search"
+    hx-post="/AccountsListFilter"
+    hx-trigger="keyup delay:100ms changed"
+    hx-target="#tablecontent"
+    placeholder="Search..." />
+</div>
+<br>
+@*
+<div>
+  <label>Search Emails: </label>
+  <input type="text" name="search"
+    hx-post="/AccountsListFilter"
+    hx-trigger="keyup delay:100ms changed"
+    hx-target="#tablecontent"
+    placeholder="Search..." />
+</div>
+*@
+
+<hr />
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NamePrefix)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MiddleInitial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FathersName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MothersName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MothersMaidenName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeOfBirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AgeInYears)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeightInKgs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfJoining)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuarterOfJoining)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HalfOfJoining)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearOfJoining)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonthOfJoining)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonthNameOfJoining)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShortMonth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DayOfJoining)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DOWOfJoining)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShortDOW)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AgeInCompanyYears)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastPercentHike)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SSN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.County)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Zip)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Region)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody id="tablecontent">
+      @await Html.PartialAsync("_SearchTable", Model)
+    </tbody>
+
+</table>

@@ -16,6 +16,156 @@ namespace dotnet_html_sortable_table.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
 
+            modelBuilder.Entity("dotnet_html_sortable_table.Models.Accounts", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("AgeInCompanyYears")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("AgeInYears")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("County")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DOWOfJoining")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DateOfBirth")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DateOfJoining")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("DayOfJoining")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("EmpId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("FathersName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("HalfOfJoining")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastPercentHike")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MiddleInitial")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MonthNameOfJoining")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("MonthOfJoining")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("MothersMaidenName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MothersName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NamePrefix")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PlaceName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("QuarterOfJoining")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Region")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SSN")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Salary")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ShortDOW")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ShortMonth")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TimeOfBirth")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("WeightInKgs")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("YearOfJoining")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Zip")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Accounts");
+                });
+
             modelBuilder.Entity("dotnet_html_sortable_table.Models.DemoObject", b =>
                 {
                     b.Property<int>("Id")
