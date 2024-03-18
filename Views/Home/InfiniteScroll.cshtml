@@ -14,19 +14,19 @@
     justify-content: center;
   }
 
-  .btn:active {
-    background: gray
+  .button-text {
+    font-size: 24px;
   }
+
 </style>
+
 <div class="buttons">
-  <form action="/Scroll" method="get">
-    <button class="btn btn-link">Full Scroll</button>
-  </form>
-  <form action="/Scroll?split=true" method="get">
-    <button class="btn btn-link" type="submit">Split Scroll</button>
-  </form>
+  <a class="btn button-text" href="/Scroll?split=False">Full Scroll</a>
+  <a class="btn button-text" href="/Scroll?split=True">Split Scroll</a>
 </div>
 
+<hr>
+<br>
 
 <table class="table"
   <thead>
