@@ -1,6 +1,7 @@
 @using dotnet_html_sortable_table.Models;
 @model IEnumerable<Accounts>
 
+<tbody id="tablecontent">
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -116,3 +117,6 @@
             </td>
         </tr>
 }
+</tbody>
+
+

@@ -40,24 +40,45 @@ public class HomeController : Controller
         size ??= 100;
         var accounts = _context.Accounts.Take(size.Value).ToList();
 
+        TempData["count"] = _context.Accounts.Count();
+        ViewData["isFullRender"] = true;
+        ViewData["size"] = size;
         return View("AccountsList", accounts);
     }
 
     [HttpPost("AccountsListFilter")]
-    public IActionResult AccountsListFilter(string search, [FromQuery] int? size) {
+    public async Task<IActionResult> AccountsListFilter(string search, [FromQuery] int? size) {
         size ??= 100;
 
         IEnumerable<Accounts> accounts;
+        int count;
         if (search != null && !search.Equals("")) {
             accounts = (from row in _context.Accounts
             where row.FirstName.Contains(search)
             select row).Take(size.Value).ToList();
+            
+            count = (from row in _context.Accounts
+            where row.FirstName.Contains(search)
+            select row).Count();
         } else {
             accounts = _context.Accounts.Take(size.Value).ToList();
+            count = _context.Accounts.Count();
         }
 
+        TempData["count"] = count;
+        ViewData["isFullRender"] = false;
+        ViewData["size"] = size;
+        // Custom event that triggers the count to reload -- good for if multiple different sources on page can alter count
+        Response.Htmx(h => {
+                h.WithTrigger("updateCount");
+            });
         Response.Headers.Add("Vary", "HX-Request");
         return PartialView("_SearchTable", accounts);
+    }
+
+    [HttpGet("AccountsListCount")]
+    public IActionResult AccountsListCount() {
+        return PartialView("_SearchTableCount", (int)TempData["count"]);
     }
 
 
