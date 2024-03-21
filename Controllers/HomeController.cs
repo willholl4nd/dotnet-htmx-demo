@@ -180,4 +180,83 @@ public class HomeController : Controller
         _context.Update(data);
         _context.SaveChanges();
     }
+
+    [HttpGet("Pagination")]
+    public IActionResult Pagination([FromQuery] int? size, [FromQuery] int? offset) {
+        size ??= 100;
+        offset ??= 0;
+        int id = 1;
+
+        var table = 
+            (from row in _context.Entries 
+                where row.DemoObjectId == id && row.Id >= size * offset 
+                select row)
+            .OrderBy(m => m.Id)
+            .Take(size.Value)
+            .ToList();
+
+        int backwardOffset, forwardOffset;
+        DeterminePageOffset(id, size.Value, offset.Value, out backwardOffset, out forwardOffset);
+
+        TempData["size"] = size;
+        TempData["forwardoffset"] = forwardOffset;
+        TempData["backwardoffset"] = backwardOffset;
+        TempData["count"] = table.Count();
+        return View("PaginationTable", table);
+    }
+
+    [HttpGet("PaginationTable")]
+    public IActionResult PaginationTable([FromQuery] int? size, [FromQuery] int? offset) {
+        if (!Request.IsHtmx()) {
+            return RedirectToAction("Pagination");
+        }
+
+        size ??= 100;
+        offset ??= 0;
+        int id = 1;
+
+        var table = 
+            (from row in _context.Entries 
+                where row.DemoObjectId == id && row.Id >= size * offset 
+                select row)
+            .OrderBy(m => m.Id)
+            .Take(size.Value)
+            .ToList();
+
+        int backwardOffset, forwardOffset;
+        DeterminePageOffset(id, size.Value, offset.Value, out backwardOffset, out forwardOffset);
+
+        TempData["size"] = size;
+        TempData["forwardoffset"] = forwardOffset;
+        TempData["backwardoffset"] = backwardOffset;
+        TempData["count"] = table.Count();
+        Response.Htmx(h => {
+                h.WithTrigger("updateCount");
+            }); // Trigger button to refresh
+        return PartialView("_PageTable", table);
+    }
+
+    [HttpGet("PaginationCount")]
+    public IActionResult PaginationCount() {
+        return PartialView("_PageCount");
+    }
+
+    private void DeterminePageOffset(int id, int size, int currentOffset, out int backOffset, out int forOffset) {
+        double count = _context.Entries.Where(m => m.DemoObjectId == id).Count();
+        double divisions = count / size;
+
+        backOffset = currentOffset switch {
+            0 => (int)divisions,
+            > 0 => currentOffset - 1,
+            _ => throw new Exception("How are we even here?")
+        };
+
+        if ((int) divisions == currentOffset) {
+            forOffset = 0;
+        } else if((int) divisions > currentOffset) {
+            forOffset = currentOffset + 1;
+        } else {
+            throw new Exception("How are we even here?");
+        }
+    }
 }

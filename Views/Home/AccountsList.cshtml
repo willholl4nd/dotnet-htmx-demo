@@ -6,12 +6,23 @@
   ViewData["Title"] = "Accounts Search";
 
   int size = (int) ViewData["size"];
+  int count = (int) TempData["count"];
 }
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.9.10/htmx.min.js"></script>
+<style type="text/css" media="all">
+  .input-container {
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+  }
+
+  .input-container > * {
+    margin: 5px;
+  }
+</style>
 
 <body>
-  <div>
+  <div class="input-container">
     <label>Search First Names: </label>
     <input type="text" name="search"
     hx-post="/AccountsListFilter?size=@size"
@@ -24,7 +35,7 @@
   <br>
   <br>
 
-  @await Html.PartialAsync("_SearchTableCount", (int) TempData["count"])
+  @await Html.PartialAsync("_SearchTableCount", count)
 
   <hr />
 

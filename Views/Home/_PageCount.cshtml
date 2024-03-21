@@ -1,0 +1,37 @@
+@{
+  int size = (int) TempData["size"];
+  int count = (int) TempData["count"];
+  int backwardoffset = (int) TempData["backwardoffset"];
+  int forwardoffset = (int) TempData["forwardoffset"];
+}
+
+<style type="text/css" media="all">
+  .buttons {
+    display: flex;
+    justify-content: center;
+  }
+
+  .button-text {
+    font-size: 24px;
+    margin: 5px;
+  }
+</style>
+
+<div class="buttons" id="button-group">
+  <button 
+    class="button-text btn btn-primary" 
+    hx-get="/PaginationTable?size=@size&offset=@backwardoffset"
+    hx-target="#tablecontent">
+    Prev Page
+  </button>
+  <button 
+    class="button-text btn btn-primary" 
+    hx-get="/PaginationTable?size=@size&offset=@forwardoffset"
+    hx-target="#tablecontent">
+    Next Page
+  </button>
+</div>
+
+<div id="count">
+  <h3>Count: <span style="color: red">@count</span></h3>
+</div>
