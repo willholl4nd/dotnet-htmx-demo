@@ -78,6 +78,9 @@ public class HomeController : Controller
 
     [HttpGet("AccountsListCount")]
     public IActionResult AccountsListCount() {
+        if (!Request.IsHtmx())
+            return RedirectToAction("AccountsList", "Home");
+
         return PartialView("_SearchTableCount", (int)TempData["count"]);
     }
 
