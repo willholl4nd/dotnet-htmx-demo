@@ -7,6 +7,7 @@ using dotnet_html_sortable_table.Data;
 
 namespace dotnet_html_sortable_table.Controllers;
 
+[Route("Home")]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
