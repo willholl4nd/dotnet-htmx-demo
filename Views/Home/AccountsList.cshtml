@@ -31,8 +31,12 @@
     hx-swap="outerHTML"
     placeholder="Search..." />
   </div>
+  <div>
+    <p>Next up is incremental searching in a table of records. Here we have the ability to in real time filter results that fit what we are searching, all within an MPA. This is a demonstration of triggers again. Here we are triggering on keyup, where checks occur every 100ms. If triggered, we make a request to filter the table further, but none of that filtering is taking place in the client; it is all server-side. 
+    </p>
+    <p>Included in this demo is this count value in red. As we type and filter down, this element is also changing, but this actually occurs separately from the table data swap; this is occurring based on an event that is sent to the client from the server. Think of those scenarios when you are viewing cart in your favorite online store, and you want to delete a couple items you don't really need. Well, we have a couple of different values across the cart view page that rely upon the cart entity represented on the server: the subtotal, the count of items, the line-items associated with each item, etc. So how do we change all of those different sections of the page without switching to either a full page reload or using a SPA? You use events! The delete button on an item will trigger the first of many effects. Deletion of that row item will come first where we swap out the table of items in our cart, but with that response to the delete item request will come an event, and our other dependent fields will be listening for that event. They then can make their own requests to update and swap out their content with the correct values. That is exactly what happens here on the count element.</p>
+  </div>
 
-  <br>
   <br>
 
   @await Html.PartialAsync("_SearchTableCount", count)
