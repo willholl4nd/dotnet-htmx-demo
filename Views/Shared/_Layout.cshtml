@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - dotnet_htmx</title>
+    @*<title hx-trigger="every 500ms" hx-get hx-controller="Home" hx-action="GetDateTime">@(await Html.PartialAsync("_LayoutDatetime", DateTime.Now))</title>*@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/dotnet_html_sortable_table.styles.css" asp-append-version="true" />
 </head>
 <body>
+    <div hx-trigger="every 500ms" hx-get hx-controller="Home" hx-action="GetDateTime" style="opacity: 0;"></div>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">

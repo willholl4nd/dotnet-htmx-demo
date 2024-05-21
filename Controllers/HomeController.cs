@@ -28,6 +28,11 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpGet("GetDateTime")]
+    public IActionResult GetDateTime() {
+        return PartialView("_LayoutDatetime", DateTime.Now);
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
